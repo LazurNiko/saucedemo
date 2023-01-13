@@ -30,6 +30,7 @@ test('Should able to login with accepted credentials', async({ page }) => {
 test('Should not be able to login with not existing username & existing password- page shows error message', async({ page }) => {
   loginPage.login('new_user', 'secret_sauce');
   await expect(loginPage.error).toHaveText('Epic sadface: Username and password do not match any user in this service');
+  console.log(await page.locator('.error-message-container.error').textContent());
   await expect(loginPage.error).toHaveCSS('background-color', 'rgb(226, 35, 26)');
   await page.screenshot({ path: 'notValidUsername.png', fullPage: true });
 });
