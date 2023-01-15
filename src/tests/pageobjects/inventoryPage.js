@@ -48,7 +48,27 @@ export class InventoryPage {
         return Object.assign(...name.map((n, i) => ({ [n]: price[i] })));
       })
     console.log('products --->>>>', products);
-    
+  }
+
+  async getProductsListAddToCartButtons() {
+    await this.page.waitForSelector('.inventory_list');
+    const itemButton = await this.page.$eval('.inventory_list', 
+      navElm => {
+        let itemText = []
+        let name = []
+        let itemButton = navElm.getElementsByTagName("button");
+
+        for (let item of itemButton) {
+          name.push(item.name);
+        }
+
+        for (let item of itemButton) {
+          itemText.push(item.innerText);
+        }
+
+        return Object.assign(...name.map((n, i) => ({ [n]: itemText[i] })));
+      })
+    console.log('Add to cart buttons --->>>>', itemButton);
   }
 
   async getBurgerMenuButton() {
@@ -206,5 +226,26 @@ export class InventoryPage {
       '$9.99',
       '$7.99'
     ]);
+  }
+
+  async getFooterLinks() {
+    await this.page.waitForSelector('.social');
+    const socialNetworkLinks = await this.page.$eval('.social', 
+      navElm => {
+        let href = []
+        let name = []
+        let atag = navElm.getElementsByTagName("a");
+        for (let item of atag) {
+          href.push(item.innerText);
+        }
+
+        for (let item of atag) {
+          name.push(item.href);
+        }
+
+        return Object.assign(...href.map((n, i) => ({ [n]: name[i] })));
+      })
+    console.log('Icons with social network links --->>>>', socialNetworkLinks);
+    await expect(this.page.locator('//footer/img')).toHaveAttribute('src', '/static/media/SwagBot_Footer_graphic.2e87acec.png');
   }
 }

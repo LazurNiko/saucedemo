@@ -11,6 +11,7 @@ test.beforeEach(async ({ page }) => {
 
 test("Should contain products list, burger menu and filter", async({ page }) => {
   await inventoryPage.getProductsList();
+  await inventoryPage.getProductsListAddToCartButtons();
   await inventoryPage.getBurgerMenuButton();
   await inventoryPage.getBurgerMenuList();
   await inventoryPage.getFilterBar();
@@ -22,3 +23,7 @@ test("Should be able to filter products in product list", async({ page }) => {
   await inventoryPage.getLowToHighFilter();
   await inventoryPage.getHighToLowFilter();
 });
+
+test.only("Footer should have icons with social network links", async({ page }) => {
+  await inventoryPage.getFooterLinks();
+})

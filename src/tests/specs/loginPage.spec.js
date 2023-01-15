@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
   await expect(page).toHaveURL('https://www.saucedemo.com/');
 });
 
-test('Should contain logo and login form with with username, password fields and submit button', async ({ page }) => {
+test('Should contain title and login form with with username, password fields and submit button', async ({ page }) => {
   loginPage.loginLogo();
   loginPage.loginImg();
   loginPage.loginBtn();
