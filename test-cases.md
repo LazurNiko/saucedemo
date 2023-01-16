@@ -167,7 +167,6 @@
 > 1. Page has product list with 'add to cart' buttons, prices and images, burger menu and footer with social network links (icons)
 >
 ------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------
 >
 > ## TC#08
 >
@@ -194,5 +193,33 @@
 > Expected result:
 >
 > 1. Page filters products via alphabet order(from A to Z and vice versa) and via prices (from low to high and vice versa)
+>
+------------------------------------------------------------------------------------------
+>
+> ## TC#09
+>
+>> ### User should be able to add products to the shopping cart
+>
+> Preconditions:
+> 
+> 1. Make sure that user is logged in
+> 
+> 2. Go to https://www.saucedemo.com/inventory.html (Inventory page)
+>
+> Steps:
+>
+> 1. Click on the ["Add to cart"] button below any product in list
+> 
+> 2. Make sure the 'Shopping cart icon' at the top-right of the page shows quantity number
+> 
+> 3. Click on the 'Shopping cart' icon
+> 
+> 4. Make sure the url is "https://www.saucedemo.com/cart.html"
+> 
+> 5. Make sure the cart page shows product and it's quantity
+>
+> Expected result:
+>
+> 1. User be able to add the product to the shopping cart - shopping cart page shows added product and it's quantity
 >
 ------------------------------------------------------------------------------------------

@@ -248,4 +248,36 @@ export class InventoryPage {
     console.log('Icons with social network links --->>>>', socialNetworkLinks);
     await expect(this.page.locator('//footer/img')).toHaveAttribute('src', '/static/media/SwagBot_Footer_graphic.2e87acec.png');
   }
+
+  async addProductsToShoppingCart() {
+    for (const button of await this.page.locator('//div[@class="pricebar"]/button').all())
+  await button.click();
+  await Promise.all(
+    [
+      this.page.waitForNavigation(),
+      this.page.locator("//a[@class='shopping_cart_link']").click()
+    ]
+  );
+  
+  await expect(this.page).toHaveURL('https://www.saucedemo.com/cart.html');
+
+  await this.page.waitForSelector('.cart_list');
+  const cartItems = await this.page.$eval('.cart_list', 
+    navElm => {
+      let name = []
+      let quantity = []
+      let itemName = navElm.getElementsByClassName("inventory_item_name");
+      let itemQuantity = navElm.getElementsByClassName('cart_quantity');
+      for (let item of itemName) {
+        name.push(item.innerText);
+      }
+
+      for (let item of itemQuantity) {
+        quantity.push(item.innerText);
+      }
+
+      return Object.assign(...name.map((n, i) => ({ [n]: quantity[i] })));
+    })
+  console.log('Cart items quantity --->>>>', cartItems);
+  }
 }

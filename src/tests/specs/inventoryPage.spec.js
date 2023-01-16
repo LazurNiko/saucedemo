@@ -4,9 +4,9 @@ const { InventoryPage } = require('../pageobjects/inventoryPage');
 let inventoryPage;
 
 test.beforeEach(async ({ page }) => {
-  inventoryPage = new InventoryPage(page);
+ inventoryPage = new InventoryPage(page);
   await inventoryPage.gotoURL();
-  await inventoryPage.login('standard_user', 'secret_sauce');
+    await inventoryPage.login('standard_user', 'secret_sauce');
 });
 
 test("Should contain products list, burger menu and filter", async({ page }) => {
@@ -24,6 +24,11 @@ test("Should be able to filter products in product list", async({ page }) => {
   await inventoryPage.getHighToLowFilter();
 });
 
-test.only("Footer should have icons with social network links", async({ page }) => {
+test("Footer should have icons with social network links", async({ page }) => {
   await inventoryPage.getFooterLinks();
-})
+});
+
+test("Should be able to add product to cart by pressing on [Add to cart] button", async({ page }) => {
+  await inventoryPage.addProductsToShoppingCart();
+});
+
