@@ -32,3 +32,6 @@ test("Should be able to add product to cart by pressing on [Add to cart] button"
   await inventoryPage.addProductsToShoppingCart();
 });
 
+test('Should be able to delete product from the shopping cart', async({ page }) => {
+  
+})
