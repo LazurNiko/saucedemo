@@ -21,12 +21,8 @@ export class InventoryPage {
   async login(username, password) {
     await this.page.fill(this.userNameTxt, username);
     await this.page.fill(this.passwordTxt, password);
-    await Promise.all(
-      [
-        this.page.waitForNavigation(),
-        this.page.click("#login-button"),
-      ]
-    );
+    await this.page.click("#login-button");
+    
   }
 
   async getProductsList() {
@@ -114,7 +110,8 @@ export class InventoryPage {
     ]);
   }
 
-  async getAtoZFilter() {
+  async getAscendingFilter() {
+    await this.page.waitForSelector('.product_sort_container');
     await this.page.locator('.product_sort_container').selectOption('az');
     await this.page.waitForSelector('.inventory_list');
     const azFiltered = await this.page.$eval('.inventory_list', 
@@ -140,7 +137,8 @@ export class InventoryPage {
     ]);
   }
 
-  async getZtoAFilter() {
+  async getDescendingFilter() {
+    await this.page.waitForSelector('.product_sort_container');
     await this.page.locator('.product_sort_container').selectOption('za');
     await this.page.waitForSelector('.inventory_list');
     const zaFiltered = await this.page.$eval('.inventory_list', 
@@ -167,6 +165,7 @@ export class InventoryPage {
   }
 
   async getLowToHighFilter() {
+    await this.page.waitForSelector('.product_sort_container');
     await this.page.locator('.product_sort_container').selectOption('lohi');
     await this.page.waitForSelector('.inventory_list');
     const lowToHigh = await this.page.$eval('.inventory_list', 
@@ -198,6 +197,7 @@ export class InventoryPage {
   }
 
   async getHighToLowFilter() {
+    await this.page.waitForSelector('.product_sort_container')
     await this.page.locator('.product_sort_container').selectOption('hilo');
     await this.page.waitForSelector('.inventory_list');
     const highToLow = await this.page.$eval('.inventory_list', 
@@ -252,6 +252,7 @@ export class InventoryPage {
   async addProductsToShoppingCart() {
     for (const button of await this.page.locator('//div[@class="pricebar"]/button').all())
   await button.click();
+  await expect(this.page.locator(".shopping_cart_badge")).toHaveText("6");
   await Promise.all(
     [
       this.page.waitForNavigation(),
@@ -279,5 +280,46 @@ export class InventoryPage {
       return Object.assign(...name.map((n, i) => ({ [n]: quantity[i] })));
     })
   console.log('Cart items quantity --->>>>', cartItems);
+  }
+
+  async removeProductsFromShoppingCart() {
+    for (const button of await this.page.locator('//div[@class="pricebar"]/button').all())
+  await button.click();
+  await expect(this.page.locator(".shopping_cart_badge")).toHaveText("6");
+  await this.page.locator("//a[@class='shopping_cart_link']").click();
+    
+  await this.page.waitForURL('https://www.saucedemo.com/cart.html');
+  await expect(this.page).toHaveURL('https://www.saucedemo.com/cart.html');
+  await expect(this.page.locator(".shopping_cart_badge")).toHaveText("6");
+  await this.page.waitForSelector('.cart_list');
+  const cartItems = await this.page.$eval('.cart_list', 
+    navElm => {
+      let name = []
+      let quantity = []
+      let itemName = navElm.getElementsByClassName("inventory_item_name");
+      let itemQuantity = navElm.getElementsByClassName('cart_quantity');
+      for (let item of itemName) {
+        name.push(item.innerText);
+      }
+
+      for (let item of itemQuantity) {
+        quantity.push(item.innerText);
+      }
+
+      return Object.assign(...name.map((n, i) => ({ [n]: quantity[i] })));
+    })
+  console.log('Cart items quantity --->>>>', cartItems);
+  await this.page.locator('//*[@id="remove-sauce-labs-backpack"]').click();
+  await this.page.locator('//*[@id="remove-sauce-labs-bike-light"]').click();
+  await this.page.locator('//*[@id="remove-sauce-labs-bolt-t-shirt"]').click();
+  await this.page.locator('//*[@id="remove-sauce-labs-onesie"]').click();
+  await this.page.locator('//*[@id="remove-test.allthethings()-t-shirt-(red)"]').click();
+  await this.page.locator('//*[@id="remove-sauce-labs-fleece-jacket"]').click();
+
+  const countDeletedItems = await this.page.locator('//div[@class="removed_cart_item"]').count();
+  console.log("Deleted items quantity -->>", countDeletedItems);
+  await expect(countDeletedItems).toBe(6);
+  await expect(this.page.locator(".cart_item")).not.toBeVisible();
+  await expect(this.page.locator(".shopping_cart_badge")).not.toBeVisible();
   }
 }

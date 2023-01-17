@@ -6,7 +6,7 @@ let inventoryPage;
 test.beforeEach(async ({ page }) => {
  inventoryPage = new InventoryPage(page);
   await inventoryPage.gotoURL();
-    await inventoryPage.login('standard_user', 'secret_sauce');
+  await inventoryPage.login('standard_user', 'secret_sauce');
 });
 
 test("Should contain products list, burger menu and filter", async({ page }) => {
@@ -18,8 +18,8 @@ test("Should contain products list, burger menu and filter", async({ page }) => 
   });
 
 test("Should be able to filter products in product list", async({ page }) => {
-  await inventoryPage.getAtoZFilter();
-  await inventoryPage.getZtoAFilter();
+  await inventoryPage.getAscendingFilter();
+  await inventoryPage.getDescendingFilter();
   await inventoryPage.getLowToHighFilter();
   await inventoryPage.getHighToLowFilter();
 });
@@ -33,5 +33,7 @@ test("Should be able to add product to cart by pressing on [Add to cart] button"
 });
 
 test('Should be able to delete product from the shopping cart', async({ page }) => {
-  
-})
+  await inventoryPage.removeProductsFromShoppingCart();
+  }
+
+)
