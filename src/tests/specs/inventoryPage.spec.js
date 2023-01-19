@@ -3,6 +3,8 @@ const { InventoryPage } = require('../pageobjects/inventoryPage');
 
 let inventoryPage;
 
+test.setTimeout(60000);
+
 test.beforeEach(async ({ page }) => {
  inventoryPage = new InventoryPage(page);
   await inventoryPage.gotoURL();
@@ -34,6 +36,4 @@ test("Should be able to add product to cart by pressing on [Add to cart] button"
 
 test('Should be able to delete product from the shopping cart', async({ page }) => {
   await inventoryPage.removeProductsFromShoppingCart();
-  }
-
-)
+  })

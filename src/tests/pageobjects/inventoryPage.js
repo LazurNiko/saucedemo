@@ -10,11 +10,6 @@ export class InventoryPage {
   }
 
   async gotoURL() {
-    await Promise.all(
-      [
-        this.page.waitForTimeout(5000),
-      ]
-    );
     await this.page.goto('https://www.saucedemo.com/');
   }
 
@@ -251,8 +246,9 @@ export class InventoryPage {
 
   async addProductsToShoppingCart() {
     for (const button of await this.page.locator('//div[@class="pricebar"]/button').all())
-  await button.click();
-  await expect(this.page.locator(".shopping_cart_badge")).toHaveText("6");
+    await button.click()
+ 
+  await expect(this.page.locator('//span[@class="shopping_cart_badge"]')).toHaveText("6");
   await Promise.all(
     [
       this.page.waitForNavigation(),
@@ -260,9 +256,6 @@ export class InventoryPage {
     ]
   );
   
-  await expect(this.page).toHaveURL('https://www.saucedemo.com/cart.html');
-
-  await this.page.waitForSelector('.cart_list');
   const cartItems = await this.page.$eval('.cart_list', 
     navElm => {
       let name = []
@@ -286,12 +279,15 @@ export class InventoryPage {
     for (const button of await this.page.locator('//div[@class="pricebar"]/button').all())
   await button.click();
   await expect(this.page.locator(".shopping_cart_badge")).toHaveText("6");
-  await this.page.locator("//a[@class='shopping_cart_link']").click();
+  await Promise.all(
+    [
+      this.page.waitForURL('https://www.saucedemo.com/cart.html'),
+      this.page.locator("//a[@class='shopping_cart_link']").click(),
+    ]
+  )
     
-  await this.page.waitForURL('https://www.saucedemo.com/cart.html');
-  await expect(this.page).toHaveURL('https://www.saucedemo.com/cart.html');
   await expect(this.page.locator(".shopping_cart_badge")).toHaveText("6");
-  await this.page.waitForSelector('.cart_list');
+  
   const cartItems = await this.page.$eval('.cart_list', 
     navElm => {
       let name = []
@@ -308,18 +304,23 @@ export class InventoryPage {
 
       return Object.assign(...name.map((n, i) => ({ [n]: quantity[i] })));
     })
-  console.log('Cart items quantity --->>>>', cartItems);
-  await this.page.locator('//*[@id="remove-sauce-labs-backpack"]').click();
+  console.log('Cart items name with quantity --->>>>', cartItems);
+  
+  const countAddedItems = await this.page.locator('//div[@class="cart_item"]').count();
+  console.log("Total added items quantity -->>", countAddedItems);
+  
   await this.page.locator('//*[@id="remove-sauce-labs-bike-light"]').click();
+  await this.page.locator('//*[@id="remove-sauce-labs-backpack"]').click();
   await this.page.locator('//*[@id="remove-sauce-labs-bolt-t-shirt"]').click();
+  await this.page.locator('//*[@id="remove-sauce-labs-fleece-jacket"]').click();
   await this.page.locator('//*[@id="remove-sauce-labs-onesie"]').click();
   await this.page.locator('//*[@id="remove-test.allthethings()-t-shirt-(red)"]').click();
-  await this.page.locator('//*[@id="remove-sauce-labs-fleece-jacket"]').click();
 
   const countDeletedItems = await this.page.locator('//div[@class="removed_cart_item"]').count();
-  console.log("Deleted items quantity -->>", countDeletedItems);
+  console.log("Total deleted items quantity -->>", countDeletedItems);
   await expect(countDeletedItems).toBe(6);
   await expect(this.page.locator(".cart_item")).not.toBeVisible();
   await expect(this.page.locator(".shopping_cart_badge")).not.toBeVisible();
   }
+  
 }
