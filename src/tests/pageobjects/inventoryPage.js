@@ -7,6 +7,10 @@ export class InventoryPage {
     this.passwordTxt = '#password';
     this.loginButton = '#login-button';
     this.filterBar = page.locator('.product_sort_container');
+    this.cartIcon = page.locator('//span[@class="shopping_cart_badge"]');
+    this.firstName = "#first-name";
+    this.lastName = "#last-name";
+    this.postalCode = "#postal-code";
   }
 
   async gotoURL() {
@@ -248,7 +252,7 @@ export class InventoryPage {
     for (const button of await this.page.locator('//div[@class="pricebar"]/button').all())
     await button.click()
  
-  await expect(this.page.locator('//span[@class="shopping_cart_badge"]')).toHaveText("6");
+  await expect(this.cartIcon).toHaveText("6");
   await Promise.all(
     [
       this.page.waitForNavigation(),
@@ -278,7 +282,7 @@ export class InventoryPage {
   async removeProductsFromShoppingCart() {
     for (const button of await this.page.locator('//div[@class="pricebar"]/button').all())
   await button.click();
-  await expect(this.page.locator(".shopping_cart_badge")).toHaveText("6");
+  await expect(this.cartIcon).toHaveText("6");
   await Promise.all(
     [
       this.page.waitForURL('https://www.saucedemo.com/cart.html'),
@@ -286,7 +290,7 @@ export class InventoryPage {
     ]
   )
     
-  await expect(this.page.locator(".shopping_cart_badge")).toHaveText("6");
+  await expect(this.cartIcon).toHaveText("6");
   
   const cartItems = await this.page.$eval('.cart_list', 
     navElm => {
@@ -320,7 +324,149 @@ export class InventoryPage {
   console.log("Total deleted items quantity -->>", countDeletedItems);
   await expect(countDeletedItems).toBe(6);
   await expect(this.page.locator(".cart_item")).not.toBeVisible();
-  await expect(this.page.locator(".shopping_cart_badge")).not.toBeVisible();
+  await expect(this.cartIcon).not.toBeVisible();
   }
+
+  async getProductFromProductList() {
+    const productName = "Sauce Labs Onesie";
+  const products = this.page.locator('//div[@class="inventory_item"]');
+  const count = await products.count();
+
+  for(let i = 0; i < count; ++i) {
+   if(await products.nth(i).locator('//div[@class="inventory_item_name"]').textContent() === productName) {
+    await products.nth(i).locator('//div[@class="pricebar"]/button').click();
+    break;
+   }
+  }
+  await expect(this.cartIcon).toHaveText("1");
+
+  await Promise.all(
+    [
+      this.page.waitForURL('https://www.saucedemo.com/cart.html'),
+      this.page.locator("//a[@class='shopping_cart_link']").click(),
+    ]
+  )
   
+  const cartItems = await this.page.$eval('.cart_list', 
+  navElm => {
+    let name = []
+    let quantity = []
+    let itemName = navElm.getElementsByClassName("inventory_item_name");
+    let itemQuantity = navElm.getElementsByClassName('cart_quantity');
+    for (let item of itemName) {
+      name.push(item.innerText);
+    }
+
+    for (let item of itemQuantity) {
+      quantity.push(item.innerText);
+    }
+
+    return Object.assign(...name.map((n, i) => ({ [n]: quantity[i] })));
+  })
+  console.log('Cart items name with quantity --->>>>', cartItems);
+  const countAddedItems = await this.page.locator('//div[@class="cart_item"]').count();
+  console.log("Total added items quantity -->>", countAddedItems);
+  expect(countAddedItems).toBe(1);
+  
+
+  }
+
+  async orderProduct() {
+    const checkoutButton = await this.page.locator("#checkout");
+    await expect(this.page.locator('.inventory_item_price')).toHaveText('$7.99');
+    checkoutButton.click();
+    await expect(this.page).toHaveURL('https://www.saucedemo.com/checkout-step-one.html');
+    await expect(this.page.locator('//button[@id="cancel"]')).toHaveText('Cancel');
+    let cancelButton = await this.page.evaluate(
+      () => document.getElementById('cancel').innerText
+    )
+    expect(cancelButton).toEqual('CANCEL')
+    console.log("Cancel button on 'checkout-step-one' page-->>", cancelButton)
+    await expect(this.page.locator('//input[@id="continue"]')).toHaveAttribute('type', 'submit');
+
+    let continueButton = await this.page.evaluate(
+      () => {
+        const input = document.getElementById('continue')
+        return input.getAttribute('name')
+      }
+    )
+    expect(continueButton).toEqual('continue')
+    console.log("Continue button on 'checkout-step-one' page-->>", continueButton)
+    
+    await this.page.fill(this.firstName, "Niko");
+    await this.page.fill(this.lastName, "Someone");
+    await this.page.fill(this.postalCode, "79035");
+  
+    await this.page.locator('//input[@id="continue"]').click();
+    await expect(this.page).toHaveURL('https://www.saucedemo.com/checkout-step-two.html');
+
+    await expect(this.page.locator('//button[@id="cancel"]')).toHaveText('Cancel');
+    let cancelButton2 = await this.page.evaluate(
+      () => document.getElementById('cancel').innerText
+    )
+    expect(cancelButton2).toEqual('CANCEL')
+    console.log("Cancel button on 'checkout-step-two' page-->>", cancelButton2)
+
+    let finishButton = await this.page.evaluate(
+      () => document.getElementById('finish').innerText
+    )
+    expect(finishButton).toEqual('FINISH')
+    console.log("Finish button on 'checkout-step-two' page-->>", finishButton)
+    
+    const cartItems = await this.page.$eval('.cart_list', 
+    navElm => {
+      let name = []
+      let quantity = []
+      let itemName = navElm.getElementsByClassName("inventory_item_name");
+      let itemQuantity = navElm.getElementsByClassName('cart_quantity');
+      for (let item of itemName) {
+        name.push(item.innerText);
+      }
+
+      for (let item of itemQuantity) {
+        quantity.push(item.innerText);
+      }
+
+    return Object.assign(...name.map((n, i) => ({ [n]: quantity[i] })));
+  })
+  console.log('Cart items name with quantity --->>>>', cartItems);
+  await expect(this.page.locator('.inventory_item_name')).toHaveText("Sauce Labs Onesie");
+  const cartQuantity = await this.page.locator('.cart_quantity').innerText();
+  expect(cartQuantity).toBe('1');
+  await(expect(this.page.locator('.inventory_item_price'))).toHaveText('$7.99');
+
+  const summaryInfo = await this.page.$eval('.summary_info', 
+    navElm => {
+      let itemPrice = []
+      let taxPrice = []
+      let totalPrice = []
+      let price = navElm.getElementsByClassName("summary_subtotal_label");
+      let tax = navElm.getElementsByClassName("summary_tax_label");
+      let total = navElm.getElementsByClassName('summary_total_label');
+      for (let item of price) {
+        itemPrice.push(item.innerText);
+      }
+
+      for (let item of tax) {
+        taxPrice.push(item.innerText);
+      }
+
+      for (let item of total) {
+        totalPrice.push(item.innerText);
+      }
+
+    return Object.assign(...itemPrice.map((n, i) => ({ [n]: `${taxPrice[i]},  ${totalPrice[i]}` })));
+  })
+  console.log('Summary info --->>>>', summaryInfo);
+
+  await this.page.locator("#finish").click();
+  await expect(this.page).toHaveURL("https://www.saucedemo.com/checkout-complete.html");
+  await expect(this.page.locator(".complete-header")).toHaveText('THANK YOU FOR YOUR ORDER');
+  await expect (this.page.locator(".complete-text")).toHaveText(
+    "Your order has been dispatched, and will arrive just as fast as the pony can get there!"
+    );
+  await expect(this.page.locator('//img[@class="pony_express"]')).toHaveAttribute("alt", 'Pony Express');
+  await expect(this.page.locator("#back-to-products")).toHaveText("Back Home");
+  await expect(this.page.locator("#back-to-products")).toBeVisible();
+  }
 }

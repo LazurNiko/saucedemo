@@ -223,3 +223,66 @@
 > 1. User be able to add the product to the shopping cart - shopping cart page shows added product and it's quantity
 >
 ------------------------------------------------------------------------------------------
+>
+> ## TC#10
+>
+>> ### User should be able to order the product
+>
+> Preconditions:
+> 
+> 1. Make sure that user is logged in
+> 
+> 2. Go to https://www.saucedemo.com/inventory.html (Inventory page)
+>
+> Test data:
+>
+>     first name: Niko
+>     last name: Someone
+>     postal code: 79035
+>
+> Steps:
+>
+> 1. Click on the ["Add to cart"] button below one product from list
+> 
+> 2. Make sure the 'Shopping cart icon' at the top-right of the page shows "1" number
+> 
+> 3. Click on the 'Shopping cart' icon
+> 
+> 4. Make sure the url is "https://www.saucedemo.com/cart.html"
+> 
+> 5. Make sure the cart page shows product and it's quantity
+>
+> 6. Make sure the page has ["Cancel"] and ["Checkout"] buttons
+>
+> 7. Click on the ["Checkout"] button
+>
+> 8. Fill all mandatory fields with test data
+>
+> 9. Make sure the page has ["Cancel"] and ["Continue"] buttons
+>
+> 10. Make sure the url is "https://www.saucedemo.com/checkout-step-one.html"
+>
+> 11. Click on the ["Continue"] button
+>
+> 12. Make sure the url is "https://www.saucedemo.com/checkout-step-two.html"
+>
+> 13. Make sure the page shows product, it's price and it's quantity
+>
+> 14. Make sure the page shows shipping and payment info
+>
+> 15. Make sure the page has ["Cancel"] and ["Finish"] buttons
+>
+> 16. Click on the ["Finish"] button
+>
+> 17. Make sure the url is "https://www.saucedemo.com/checkout-complete.html
+>
+> 18. Make sure the page has "THANK YOU FOR YOUR ORDER" title
+>
+> 19. Make sure the page has the "Pony Express" image on the center of the screen
+>
+> 20. Make sur the button ["Back Home"] is exists
+>
+> Expected result:
+>
+> 1. User be able to order the product - user successfully order the product
+>
