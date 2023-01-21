@@ -38,7 +38,7 @@ test('Should be able to delete product from the shopping cart', async({ page }) 
   await inventoryPage.removeProductsFromShoppingCart();
   })
 
-test.only('Should be able to order the product', async({ page }) => {
+test('Should be able to order the product', async({ page }) => {
   await inventoryPage.getProductFromProductList();
   await inventoryPage.orderProduct();
 })
