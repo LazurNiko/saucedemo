@@ -1,12 +1,13 @@
 import { test, expect } from "@playwright/test";
-const { InventoryPage } = require('../pageobjects/inventoryPage');
+const { POmanager } = require('../pageobjects/POmanager');
 
 let inventoryPage;
 
 test.setTimeout(60000);
 
 test.beforeEach(async ({ page }) => {
- inventoryPage = new InventoryPage(page);
+  const poManager = new POmanager(page);
+  inventoryPage = poManager.getInventoryPage(page);
   await inventoryPage.gotoURL();
   await inventoryPage.login('standard_user', 'secret_sauce');
 });

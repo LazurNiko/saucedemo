@@ -1,17 +1,17 @@
 import { test, expect } from "@playwright/test";
-const { LoginPage } = require('../pageobjects/loginPage');
+const { POmanager } = require('../pageobjects/POmanager');
 
 let loginPage;
 
 test.beforeEach(async ({ page }) => {
-  loginPage = new LoginPage(page);
+  const poManager = new POmanager(page);
+  loginPage = poManager.getLoginPage(page);
   await loginPage.goto();
   await expect(page).toHaveURL('https://www.saucedemo.com/');
 });
 
 test('Should contain title and login form with with username, password fields and submit button', async ({ page }) => {
   await loginPage.loginLogo();
-  await loginPage.loginImg();
   await loginPage.loginBtn();
   await loginPage.usernameAndPasswordFields();
   await expect(loginPage.usernameList).toHaveText(

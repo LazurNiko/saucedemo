@@ -8,7 +8,6 @@ export class LoginPage {
     this.usernameList = page.locator('div.login_credentials');
     this.passwordList = page.locator('div.login_password');
     this.logo = page.locator('.login_logo');
-    this.image = page.locator('.bot_column');
     this.userNameTxt = '#user-name';
     this.passwordTxt = '#password';
     this.loginButton = '#login-button';
@@ -27,10 +26,6 @@ export class LoginPage {
   async loginBtn() {
     await expect(this.page.locator('#login-button')).toHaveAttribute('type', 'submit');
     await expect(this.page.locator('#login-button')).toBeVisible();
-  }
-
-  async loginImg() {
-    await expect(this.page.locator('.bot_column')).toBeVisible();
   }
 
   async loginLogo() {

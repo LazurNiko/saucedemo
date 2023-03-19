@@ -36,6 +36,11 @@ const config = {
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     headless: true,
+    baseURL: "https://reactblog-34a5a.lm.r.appspot.com/",
+   extraHTTPHeaders: {
+     Authorization:
+       "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImQwNTU5YzU5MDgzZDc3YWI2NDUxOThiNTIxZmM4ZmVmZmVlZmJkNjIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcmVhY3RibG9nLTM0YTVhIiwiYXVkIjoicmVhY3RibG9nLTM0YTVhIiwiYXV0aF90aW1lIjoxNjc0MzkxMzY3LCJ1c2VyX2lkIjoieGl2UVhhSEtlblpXa2FoZnd5SkpVWHVXbzlHMiIsInN1YiI6InhpdlFYYUhLZW5aV2thaGZ3eUpKVVh1V285RzIiLCJpYXQiOjE2NzQzOTEzNjcsImV4cCI6MTY3NDM5NDk2NywiZW1haWwiOiJuaWtvMUBtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJuaWtvMUBtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.D9LA1WQCKzj20NR1fbj7L3s3qrsEyRnak-469YkcNEsipVniykoXNkLR89uli8CYZ9nU_zxA9WxcV7oaM0tGZTviL7J22VQysXu8BBgTBZiGcypdCCTId2HFsQQfc7XIbsigQGh1wVjb3KzKnFxzEv_OV9KiHDzOwjtDSWkfVE6VTX70QxLG_ZPXZtvwZWT61bKnDuHMPofb5FLjL9zH7A2HWZ83vB0QMjrUX6WGiS0DSoCVV2hcxboX5P04omtZZReNQVJF6k18W1AKMDnPXF14l5KmS7YeyUI9bAa3roTigzkJPDBij9BjMJ6uyGfpb3MXJ-y8v8YGzrJOpJ7vSQ"
+   },
     
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,

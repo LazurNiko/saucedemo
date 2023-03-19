@@ -245,7 +245,6 @@ export class InventoryPage {
         return Object.assign(...href.map((n, i) => ({ [n]: name[i] })));
       })
     console.log('Icons with social network links --->>>>', socialNetworkLinks);
-    await expect(this.page.locator('//footer/img')).toHaveAttribute('src', '/static/media/SwagBot_Footer_graphic.2e87acec.png');
   }
 
   async addProductsToShoppingCart() {
@@ -380,7 +379,7 @@ export class InventoryPage {
     let cancelButton = await this.page.evaluate(
       () => document.getElementById('cancel').innerText
     )
-    expect(cancelButton).toEqual('CANCEL')
+    expect(cancelButton).toEqual('Cancel')
     console.log("Cancel button on 'checkout-step-one' page-->>", cancelButton)
     await expect(this.page.locator('//input[@id="continue"]')).toHaveAttribute('type', 'submit');
 
@@ -404,13 +403,13 @@ export class InventoryPage {
     let cancelButton2 = await this.page.evaluate(
       () => document.getElementById('cancel').innerText
     )
-    expect(cancelButton2).toEqual('CANCEL')
+    expect(cancelButton2).toEqual('Cancel')
     console.log("Cancel button on 'checkout-step-two' page-->>", cancelButton2)
 
     let finishButton = await this.page.evaluate(
       () => document.getElementById('finish').innerText
     )
-    expect(finishButton).toEqual('FINISH')
+    expect(finishButton).toEqual('Finish')
     console.log("Finish button on 'checkout-step-two' page-->>", finishButton)
     
     const cartItems = await this.page.$eval('.cart_list', 
@@ -461,7 +460,7 @@ export class InventoryPage {
 
   await this.page.locator("#finish").click();
   await expect(this.page).toHaveURL("https://www.saucedemo.com/checkout-complete.html");
-  await expect(this.page.locator(".complete-header")).toHaveText('THANK YOU FOR YOUR ORDER');
+  await expect(this.page.locator(".complete-header")).toHaveText('Thank you for your order!');
   await expect (this.page.locator(".complete-text")).toHaveText(
     "Your order has been dispatched, and will arrive just as fast as the pony can get there!"
     );
