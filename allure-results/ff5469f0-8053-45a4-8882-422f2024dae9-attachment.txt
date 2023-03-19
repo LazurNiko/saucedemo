@@ -1,0 +1,10 @@
+Cart items name with quantity --->>>> {
+  'Sauce Labs Backpack': '1',
+  'Sauce Labs Bike Light': '1',
+  'Sauce Labs Bolt T-Shirt': '1',
+  'Sauce Labs Fleece Jacket': '1',
+  'Sauce Labs Onesie': '1',
+  'Test.allTheThings() T-Shirt (Red)': '1'
+}
+Total added items quantity -->> 6
+Total deleted items quantity -->> 6

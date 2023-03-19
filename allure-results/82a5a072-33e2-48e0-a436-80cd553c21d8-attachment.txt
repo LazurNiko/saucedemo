@@ -1,0 +1,4 @@
+Cart items name with quantity --->>>> { 'Sauce Labs Onesie': '1' }
+Total added items quantity -->> 1
+Cancel button on 'checkout-step-one' page-->> Cancel
+Continue button on 'checkout-step-one' page-->> continue

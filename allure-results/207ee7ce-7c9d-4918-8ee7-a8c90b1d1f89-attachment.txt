@@ -1,0 +1,22 @@
+products --->>>> {
+  'Sauce Labs Backpack': '$29.99',
+  'Sauce Labs Bike Light': '$9.99',
+  'Sauce Labs Bolt T-Shirt': '$15.99',
+  'Sauce Labs Fleece Jacket': '$49.99',
+  'Sauce Labs Onesie': '$7.99',
+  'Test.allTheThings() T-Shirt (Red)': '$15.99'
+}
+Add to cart buttons --->>>> {
+  'add-to-cart-sauce-labs-backpack': 'Add to cart',
+  'add-to-cart-sauce-labs-bike-light': 'Add to cart',
+  'add-to-cart-sauce-labs-bolt-t-shirt': 'Add to cart',
+  'add-to-cart-sauce-labs-fleece-jacket': 'Add to cart',
+  'add-to-cart-sauce-labs-onesie': 'Add to cart',
+  'add-to-cart-test.allthethings()-t-shirt-(red)': 'Add to cart'
+}
+products list in burger menu --->>>> {
+  'All Items': 'https://www.saucedemo.com/inventory.html#',
+  About: 'https://saucelabs.com/',
+  Logout: 'https://www.saucedemo.com/inventory.html#',
+  'Reset App State': 'https://www.saucedemo.com/inventory.html#'
+}

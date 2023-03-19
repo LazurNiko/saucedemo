@@ -1,0 +1,32 @@
+A-z filtered list --->>>> {
+  'Sauce Labs Backpack': [ 0 ],
+  'Sauce Labs Bike Light': [ 1 ],
+  'Sauce Labs Bolt T-Shirt': [ 2 ],
+  'Sauce Labs Fleece Jacket': [ 3 ],
+  'Sauce Labs Onesie': [ 4 ],
+  'Test.allTheThings() T-Shirt (Red)': [ 5 ]
+}
+Z-a filtered list --->>>> {
+  'Test.allTheThings() T-Shirt (Red)': [ 0 ],
+  'Sauce Labs Onesie': [ 1 ],
+  'Sauce Labs Fleece Jacket': [ 2 ],
+  'Sauce Labs Bolt T-Shirt': [ 3 ],
+  'Sauce Labs Bike Light': [ 4 ],
+  'Sauce Labs Backpack': [ 5 ]
+}
+Low to high filtered --->>>> {
+  'Sauce Labs Onesie': '$7.99',
+  'Sauce Labs Bike Light': '$9.99',
+  'Sauce Labs Bolt T-Shirt': '$15.99',
+  'Test.allTheThings() T-Shirt (Red)': '$15.99',
+  'Sauce Labs Backpack': '$29.99',
+  'Sauce Labs Fleece Jacket': '$49.99'
+}
+High to low filtered --->>>> {
+  'Sauce Labs Fleece Jacket': '$49.99',
+  'Sauce Labs Backpack': '$29.99',
+  'Sauce Labs Bolt T-Shirt': '$15.99',
+  'Test.allTheThings() T-Shirt (Red)': '$15.99',
+  'Sauce Labs Bike Light': '$9.99',
+  'Sauce Labs Onesie': '$7.99'
+}

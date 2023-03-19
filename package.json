@@ -11,6 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
-    "@playwright/test": "^1.29.0"
+    "@playwright/test": "^1.31.2",
+    "allure-playwright": "^2.1.0"
   }
 }

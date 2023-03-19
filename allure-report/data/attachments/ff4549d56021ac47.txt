@@ -1,0 +1,8 @@
+Cart items name with quantity --->>>> { 'Sauce Labs Onesie': '1' }
+Total added items quantity -->> 1
+Cancel button on 'checkout-step-one' page-->> Cancel
+Continue button on 'checkout-step-one' page-->> continue
+Cancel button on 'checkout-step-two' page-->> Cancel
+Finish button on 'checkout-step-two' page-->> Finish
+Cart items name with quantity --->>>> { 'Sauce Labs Onesie': '1' }
+Summary info --->>>> { 'Item total: $7.99': 'Tax: $0.64,  Total: $8.63' }

@@ -1,4 +1,5 @@
 const { expect } = require('@playwright/test');
+const dataSet = JSON.parse(JSON.stringify(require('../../../utils/checkoutOrderData.json')))
 
 export class InventoryPage {
   constructor(page) {
@@ -366,8 +367,6 @@ export class InventoryPage {
   const countAddedItems = await this.page.locator('//div[@class="cart_item"]').count();
   console.log("Total added items quantity -->>", countAddedItems);
   expect(countAddedItems).toBe(1);
-  
-
   }
 
   async orderProduct() {
@@ -392,9 +391,9 @@ export class InventoryPage {
     expect(continueButton).toEqual('continue')
     console.log("Continue button on 'checkout-step-one' page-->>", continueButton)
     
-    await this.page.fill(this.firstName, "Niko");
-    await this.page.fill(this.lastName, "Someone");
-    await this.page.fill(this.postalCode, "79035");
+    await this.page.fill(this.firstName, dataSet.firstName);
+    await this.page.fill(this.lastName, dataSet.lastName);
+    await this.page.fill(this.postalCode, dataSet.postalCode);
   
     await this.page.locator('//input[@id="continue"]').click();
     await expect(this.page).toHaveURL('https://www.saucedemo.com/checkout-step-two.html');

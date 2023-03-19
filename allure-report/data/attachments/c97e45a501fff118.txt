@@ -1,0 +1,5 @@
+Icons with social network links --->>>> {
+  Twitter: 'https://twitter.com/saucelabs',
+  Facebook: 'https://www.facebook.com/saucelabs',
+  LinkedIn: 'https://www.linkedin.com/company/sauce-labs/'
+}
